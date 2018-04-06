@@ -91,77 +91,12 @@ public class Relatorio {
 
             // se o tamanho do arquivo é 1KB, pulo o processo de envio pois o arquivo está vazio
             File f = new File(outfilename + ".pdf");
-            /*if (f.length() <= 1024) {
-                return;
-            }
-
-            String from, cc, subject, pathFile = null;
-            boolean emailHtmlFormat = false;
-            from = "alexandro.pergher@laticiniospereira.com.br";
-            String to[] = {"alexandro.pergher@laticiniospereira.com.br", "ti@laticiniospereira.com.br"};
-
-            boolean emailempresa = false;
-            ResultSet dadosjob = null;
-            // verifica se tem email exclusivo por empresa
-            if (getFilial() != null) {
-                if (getFilial().trim().length() > 0) {
-                    // pego os emails pela sequencia e empresa na tabela schedulefilial
-                    // se não tiver, pega direto da tabela schedule
-                    String vsql = "select f.ds_email from schedulefilial as f"
-                            + " inner join schedule as s on (s.id_job = f.id_job)"
-                            + " where s.nm_relatorio = '" + nomejob + "' "
-                            + "   and f.cd_filial = '" + getFilial() + "' "
-                            + "   and f.nr_sequencia = " + getNrseqenvio() + " ; ";
-                    dadosjob = ConexaoHomeBI.getStatement().executeQuery(vsql);
-                    if (dadosjob.next()) {
-                        to = dadosjob.getString("ds_email").replaceAll("\"", "").split(";");
-                        dadosjob.close();
-                        emailempresa = true;
-                    }
-                }
-            }
-            if (!emailempresa) {
-                // busco os emails para esse relatorio ser enviado
-                String vsql = "select ds_email from schedule where nm_relatorio = '" + nomejob + "'; ";
-                dadosjob = ConexaoHomeBI.getStatement().executeQuery(vsql);
-                if (dadosjob.next()) {
-                    if (dadosjob.getString("ds_email") != null) {
-                        to = dadosjob.getString("ds_email").replaceAll("\"", "").split(";");
-                    }
-                }
-            }
-            // se setou os destinos da classe, sobrepoe todos os outros
-            if (destinos != null && destinos.length > 0) {
-                to = destinos;
-            }
-            cc = "";
-            subject = descricao;
-            if (assunto.trim().length() > 0) {
-                subject = assunto;
-            }
-            String message = descricao;
-            message += "\n\n\nE-mail enviado automaticamente pelos sistemas do Grupo Pereira. Favor não responder!";
-            
-            pathFile = "";
-            if (to.length > 0) {
-                SendMail.send(from, to, cc, subject, message, new File(outfilename + ".pdf"), emailHtmlFormat);
-            }*/
+           
 
         } catch (Exception ex) {
             ex.printStackTrace();
             System.out.println(ex.getMessage() + " " +  nomejob);
         }
-    }
-
-    public void enviaDanfe() {
-        /*
-         * String from = "protheus@laticiniospereira.com.br", subject = "ENVIO
-         * DE DANFE"; boolean emailHtmlFormat = false; String message = "No
-         * anexo segue danfe emitido pela " + Empresa.getInstance().getNome() +
-         * "."; String to[] = {"alexandro.pergher@laticiniospereira.com.br"};
-         * sendMail.send(from, to, null, subject, message, new File(outfilename
-         * + ".pdf"), emailHtmlFormat);
-         */
     }
 
     /**
