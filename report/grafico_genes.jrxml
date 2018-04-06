@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grafico_genes" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="edd7af3a-5b61-452f-a93b-caa9146bdf22">
+	<property name="ireport.zoom" value="1.0245201830476058"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="populacao" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[select g.cd_populacao, g.vl_gene, g.nr_iteracao, g.cd_gene from gene as g
+ inner join populacao as p on (g.cd_populacao = p.cd_populacao)
+ where g.cd_populacao = $P{populacao}
+ order by cd_gene, nr_iteracao]]>
+	</queryString>
+	<field name="cd_populacao" class="java.lang.Integer"/>
+	<field name="vl_gene" class="java.lang.Integer"/>
+	<field name="nr_iteracao" class="java.lang.Integer"/>
+	<field name="cd_gene" class="java.lang.Integer"/>
+	<group name="gene" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{cd_gene}]]></groupExpression>
+		<groupFooter>
+			<band height="264">
+				<lineChart>
+					<chart evaluationTime="Group" evaluationGroup="gene" renderType="draw" theme="default">
+						<reportElement isPrintRepeatedValues="false" mode="Opaque" x="0" y="0" width="774" height="264" isPrintWhenDetailOverflows="true" uuid="4c8e5536-9286-48f7-a02c-def7f0d60b29"/>
+						<chartTitle position="Top"/>
+						<chartSubtitle/>
+						<chartLegend/>
+					</chart>
+					<categoryDataset>
+						<dataset resetType="Group" resetGroup="gene"/>
+						<categorySeries>
+							<seriesExpression><![CDATA["Evolução do Gene "+$F{cd_gene}]]></seriesExpression>
+							<categoryExpression><![CDATA[$F{nr_iteracao}]]></categoryExpression>
+							<valueExpression><![CDATA[$F{vl_gene}]]></valueExpression>
+						</categorySeries>
+					</categoryDataset>
+					<linePlot>
+						<plot/>
+						<categoryAxisFormat>
+							<axisFormat/>
+						</categoryAxisFormat>
+						<valueAxisFormat>
+							<axisFormat/>
+						</valueAxisFormat>
+					</linePlot>
+				</lineChart>
+			</band>
+		</groupFooter>
+	</group>
+	<lastPageFooter>
+		<band height="240">
+			<lineChart>
+				<chart renderType="draw" theme="default">
+					<reportElement isPrintRepeatedValues="false" mode="Opaque" x="10" y="10" width="764" height="230" isPrintWhenDetailOverflows="true" uuid="6654265d-6a9a-43cb-88d0-9dcec4417822"/>
+					<chartTitle position="Top"/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Evolução do Gene "+$F{cd_gene}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nr_iteracao}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{vl_gene}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<linePlot>
+					<plot/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</linePlot>
+			</lineChart>
+		</band>
+	</lastPageFooter>
+</jasperReport>

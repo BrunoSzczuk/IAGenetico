@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="grafico" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d7e0ba63-c237-4b84-9ab5-992ae7db1b31">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="764"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="populacao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Bruno\\Desktop\\4° Periodo-20170817T220635Z-001\\4° Periodo\\IAFernando-20170815T160146Z-001\\IAFernando\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select p.cd_populacao,to_char(p.dt_emissao, 'DD/MM/YYYY') as dt_emissao, p.qt_gene, p.qt_geracoes, p.qt_cromossomos
+  from populacao as p
+ where p.cd_populacao = $P{populacao}]]>
+	</queryString>
+	<field name="cd_populacao" class="java.lang.Integer"/>
+	<field name="dt_emissao" class="java.lang.String"/>
+	<field name="qt_gene" class="java.lang.Integer"/>
+	<field name="qt_geracoes" class="java.lang.Integer"/>
+	<field name="qt_cromossomos" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="97">
+			<textField>
+				<reportElement x="277" y="0" width="277" height="26" uuid="75503d02-85de-46f9-8009-004c9aa2b31f"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Relatório de evolução de Genes"]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-20" y="86" width="854" height="1" uuid="a05b9af6-e108-4a8f-8130-b5c4c7d5d6c1"/>
+			</line>
+			<textField>
+				<reportElement x="140" y="35" width="137" height="26" uuid="a3810283-821e-497e-ad57-9ec74be26e8a"/>
+				<textFieldExpression><![CDATA["População: " +$F{cd_populacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="61" width="137" height="26" uuid="b77dd262-ce81-4714-b730-06aa8f6bbfe7"/>
+				<textFieldExpression><![CDATA["Quantidade de Genes: " +$F{qt_gene}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="35" width="210" height="26" uuid="ccf32e58-922c-466e-9309-7beceada38fd"/>
+				<textFieldExpression><![CDATA["Quantidade de Cromossomo por gene: " +$F{qt_cromossomos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="297" y="61" width="176" height="26" uuid="6f48eef9-a8e5-4367-bdb5-2e1d67b7cada"/>
+				<textFieldExpression><![CDATA["Quantidade de gerações: " +$F{qt_geracoes}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="61" width="198" height="26" uuid="c202f527-a9f8-422a-b77e-638a8ff75915"/>
+				<textFieldExpression><![CDATA["População gerada em: " + $F{dt_emissao}.toString()]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="17" y="0" width="115" height="84" uuid="4ad6d762-c920-4c83-b51b-a4bbec255912"/>
+				<imageExpression><![CDATA[".\\fag.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="690" y="6" width="80" height="20" uuid="b0bf260c-87d2-4048-a31c-b8a7d8981429"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="770" y="6" width="40" height="20" uuid="ad5df8a8-bd21-441c-bfeb-69724f6554f1"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="513" y="35" width="199" height="26" uuid="87a0c6fa-96dd-4c0c-9d0e-23cc12392f1a"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Valor máximo do cromossomo: " +(int)(Math.pow(2,$F{qt_cromossomos}) -1)]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="92" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="11" width="739" height="68" uuid="c43c225c-024a-4c26-8e56-f5cf6a60284c"/>
+				<subreportParameter name="populacao">
+					<subreportParameterExpression><![CDATA[$F{cd_populacao}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[".\\grafico_genes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="657" y="0" width="145" height="26" uuid="d53c43e0-6c43-4434-8830-65ccbed7b11c"/>
+				<textFieldExpression><![CDATA["Bruno Henrique Pereira Szczuk"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="364" height="26" uuid="c5e6f6f6-90ae-419a-a742-0654eb7268b1"/>
+				<textFieldExpression><![CDATA["Relatório gerado em " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
